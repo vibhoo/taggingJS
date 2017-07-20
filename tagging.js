@@ -84,7 +84,11 @@
             "tags-input-name": "tag",                       // Name to use as name="" in single tags (by default tag[])
             "tag-on-blur": true,                            // Add the current tag if user clicks away from type-zone
             "tags-limit": 0,                                // Limit the number of tags that can be added, zero means no limit
-            "type-zone-class": "type-zone"                 // Class of the type-zone
+            "type-zone-class": "type-zone",                 // Class of the type-zone
+            "allowed-words": [],                           // Array of allowed words
+            "allowed-words-callback": window.alert,       // Function to call when there is a allowed words
+            "allowed-words-text": "Tag not allowed:"      // Basic text passed to allowed-words callback
+
         },
 
         /**
@@ -99,7 +103,7 @@
 
             var $tag, l, self,
                 index, forbidden_words,
-                callback_f, callback_t;
+                callback_f, callback_t, allowed_words;
 
             // Caching this
             self = this;
@@ -114,6 +118,8 @@
 
             // Forbidden Words shortcut
             forbidden_words = self.config[ "forbidden-words" ];
+
+            allowed_words   = self.config[ "allowed-words"];
 
             // If no text is passed, take it as text of $type_zone and then empty it
             if ( ! text ) {
@@ -147,6 +153,25 @@
                     // Renaiming
                     callback_f = self.config[ "forbidden-words-callback" ];
                     callback_t = self.config[ "forbidden-words-text" ];
+
+                    // Remove as a duplicate
+                    return self.throwError( callback_f, callback_t, text );
+                }
+            }
+
+            // Check if text is allowed or not
+            l = allowed_words.length;
+            while ( l-- ) {
+
+                //  looking for words which are allowed
+                if ( ! allowed_words.includes(text) ) {
+
+                    // Removing all text and ','
+                    self.emptyInput();
+
+                    // Renaiming
+                    callback_f = self.config[ "allowed-words-callback" ];
+                    callback_t = self.config[ "allowed-words-text" ];
 
                     // Remove as a duplicate
                     return self.throwError( callback_f, callback_t, text );
