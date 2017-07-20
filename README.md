@@ -328,6 +328,9 @@ a little description and the default value:
 | **tags-input-name** | `String` | `"tag"` | Name to use as `name=""` in single tags' input. By default, all tags being passed as array like `tag[]`. |
 | **tags-limit** | `Integer` | `0` | Limit the number of tags that can be added, zero for no limit. |
 | **type-zone-class** | `String` | `"type-zone"` | Class of the type-zone. |
+| **allowed-words** | `Array` | `[]` | Array of allowed words. |
+| **allowed-words-callback** | `Function` | `window.alert` | Function to call when allowed words are not detected. |
+| **allowed-words-text** | `String` | `"Tag not allowed:"` | Basic text passed to when allowed words not detected `allowed-words-callback`. |
 
 ## Available Methods ##
 
